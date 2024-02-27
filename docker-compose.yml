@@ -1,0 +1,13 @@
+version: '3.7'
+
+services:
+  digitransit-ui:
+    image: ghcr.io/goat-community/digitransit-ui:latest
+    ports:
+      - 8080:8080
+    environment:
+      - API_URL=https://api.bbnavi.de
+      - DATAHUB_URL=https://datahub.bbnavi.de
+      - DATAHUB_O_AUTH_CLIENT_ID=B0IlpNZbNizOP0hLYJzo88bKVc_SZD6e3Dxxoa6Fgts
+      - DATAHUB_O_AUTH_CLIENT_SECRET=qFQr8S6ld1tnVjojgSvjr9Q6IoM3i4OdaZ3Hv1M8idk
+      - CONFIG=bbnavi

@@ -7,10 +7,8 @@ metadata:
     argocd-image-updater.argoproj.io/write-back-method: git
     argocd-image-updater.argoproj.io/git-branch: main
     argocd-image-updater.argoproj.io/image-list: |
-      ui=goatcommunity/klnavi-ui,
-      backend=goatcommunity/klnavi-otp,
+      ui=ghcr.io/goat-community/digitransit-ui
     argocd-image-updater.argoproj.io/update-strategy: latest
-    argocd-image-updater.argoproj.io/allow-tags: regexp:^[0-9a-f]{7}$
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:

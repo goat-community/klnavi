@@ -5,4 +5,6 @@ namespace: dev
 
 
 resources:
+  - ../../base
   - ./namespace.yml
+  - ./ingress.yml

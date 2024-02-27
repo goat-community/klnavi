@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: digitransit-ui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: digitransit-ui
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 100%
+      maxUnavailable: 50%
+  minReadySeconds: 15
+  template:
+    metadata:
+      labels:
+        app: digitransit-ui
+    spec:
+      containers:
+        - image: ghcr.io/goat-community/digitransit-ui
+          imagePullPolicy: IfNotPresent
+          name: digitransit-ui
+          ports:
+            - containerPort: 8080
+          envFrom:
+            - configMapRef:
+                name: digitransit-ui-config
