@@ -16,7 +16,7 @@ services:
     image: docker.io/opentripplanner/opentripplanner:2.5.0_2024-02-22T18-35
     environment:
       - JAVA_OPTS=-Xmx12G
-    command: ["--build", "--serve"]
+    command: ["--load"]
     volumes:
       - ./opentripplanner/graph-main/:/var/opentripplanner/
     ports:
