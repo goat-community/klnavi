@@ -50,7 +50,7 @@ module "kube-hetzner" {
   control_plane_nodepools = [
     {
       name        = "control-plane-nbg1",
-      server_type = "cpx11",
+      server_type = "cpx21",
       location    = "nbg1",
       labels      = [],
       taints      = [],

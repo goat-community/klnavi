@@ -9,6 +9,7 @@ metadata:
     argocd-image-updater.argoproj.io/image-list: |
       ui=ghcr.io/goat-community/digitransit-ui
     argocd-image-updater.argoproj.io/update-strategy: latest
+    argocd-image-updater.argoproj.io/ignore-tags: next,latest
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
