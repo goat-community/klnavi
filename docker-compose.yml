@@ -11,3 +11,13 @@ services:
       - DATAHUB_O_AUTH_CLIENT_ID=B0IlpNZbNizOP0hLYJzo88bKVc_SZD6e3Dxxoa6Fgts
       - DATAHUB_O_AUTH_CLIENT_SECRET=qFQr8S6ld1tnVjojgSvjr9Q6IoM3i4OdaZ3Hv1M8idk
       - CONFIG=bbnavi
+  
+  opentripplanner:
+    image: docker.io/opentripplanner/opentripplanner:2.5.0_2024-02-22T18-35
+    environment:
+      - JAVA_OPTS=-Xmx12G
+    command: ["--build", "--serve"]
+    volumes:
+      - ./opentripplanner/graph-main/:/var/opentripplanner/
+    ports:
+      - 8090:8080
