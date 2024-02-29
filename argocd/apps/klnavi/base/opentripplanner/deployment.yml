@@ -19,7 +19,7 @@ spec:
         app: opentripplanner
     spec:
       containers:
-        - image: ghcr.io/bbnavi/opentripplaner-berlin-brandenburg
+        - image: ghcr.io/bbnavi/opentripplaner-berlin-brandenburg:master
           imagePullPolicy: IfNotPresent
           name: opentripplanner
           ports:
