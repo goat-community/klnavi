@@ -35,15 +35,18 @@ spec:
       initContainers:
         - name: download-files
           image: busybox
+          env:
+            - name: GRAPH_NAME
+              value: graph_28_02_2024.obj
           command: 
             - /bin/sh
             - -c
             - |
-              du -sh /var/opentripplanner/graph.obj
               wget -O /var/opentripplanner/otp-config.json https://raw.githubusercontent.com/goat-community/klnavi/main/opentripplanner/graph-main/otp-config.json
               wget -O /var/opentripplanner/router-config.json https://github.com/goat-community/klnavi/blob/main/opentripplanner/graph-main/router-config.json
-              if [ ! -f /var/opentripplanner/graph_28_02_2024.obj ]; then 
-                wget -O /var/opentripplanner/graph_28_02_2024.obj https://assets.plan4better.de/otp/klnavi/graph_28_02_2024.obj && cp /var/opentripplanner/graph_28_02_2024.obj /var/opentripplanner/graph.obj
+              if [ ! -f /var/opentripplanner/$GRAPH_NAME ]; then 
+                wget -O /var/opentripplanner/$GRAPH_NAME https://assets.plan4better.de/otp/klnavi/$GRAPH_NAME
+                cp /var/opentripplanner/$GRAPH_NAME /var/opentripplanner/graph.obj
               fi
           volumeMounts:
             - name: opentripplanner-data
