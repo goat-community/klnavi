@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: opentripplanner
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: opentripplanner
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 100%
+      maxUnavailable: 50%
+  minReadySeconds: 15
+  template:
+    metadata:
+      labels:
+        app: opentripplanner
+    spec:
+      containers:
+        - image: ghcr.io/bbnavi/opentripplaner-berlin-brandenburg
+          imagePullPolicy: IfNotPresent
+          name: opentripplanner
+          ports:
+            - containerPort: 8080

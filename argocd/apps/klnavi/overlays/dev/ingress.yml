@@ -20,3 +20,26 @@ spec:
               name: digitransit-ui-service
               port:
                 number: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: api-public-srv-klnavi-dev
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt
+spec:
+  tls:
+  - hosts:
+    - 'api.klnavi.dev.plan4better.de'
+    secretName: api-public-srv-klnavi-dev-tls
+  rules:
+  - host: 'api.klnavi.dev.plan4better.de'
+    http:
+      paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: opentripplanner-service
+              port:
+                number: 80
