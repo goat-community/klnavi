@@ -55,6 +55,10 @@ spec:
         - image: opentripplanner/opentripplanner:2.5.0_2024-02-29T13-29
           imagePullPolicy: IfNotPresent
           name: opentripplanner
+          env:
+          - name: JAVA_OPTS
+            value: "-Xmx8G"
+          args: ["--load"]
           volumeMounts:
             - name: opentripplanner-data
               mountPath: /var/opentripplanner
