@@ -1,3 +1,3 @@
 kustomize:
   images:
-  - ghcr.io/goat-community/digitransit-ui:2024-02-28T12.49.21-1570ce2
+  - ghcr.io/goat-community/digitransit-ui:2024-02-29T21.55.13-040756e
