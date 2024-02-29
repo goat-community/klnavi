@@ -39,6 +39,7 @@ spec:
             - /bin/sh
             - -c
             - |
+              du -sh /var/opentripplanner/graph.obj
               wget -O /var/opentripplanner/otp-config.json https://raw.githubusercontent.com/goat-community/klnavi/main/opentripplanner/graph-main/otp-config.json
               wget -O /var/opentripplanner/router-config.json https://github.com/goat-community/klnavi/blob/main/opentripplanner/graph-main/router-config.json
               if [ ! -f /var/opentripplanner/graph_28_02_2024.obj ]; then 
