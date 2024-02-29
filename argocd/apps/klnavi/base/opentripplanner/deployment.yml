@@ -22,5 +22,9 @@ spec:
         - image: ghcr.io/bbnavi/opentripplaner-berlin-brandenburg:master
           imagePullPolicy: IfNotPresent
           name: opentripplanner
+          resources:
+            limits:
+              cpu: "2"
+              memory: "5000Mi"
           ports:
             - containerPort: 8080
