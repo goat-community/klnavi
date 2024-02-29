@@ -44,6 +44,7 @@ spec:
             - |
               wget -O /var/opentripplanner/otp-config.json https://raw.githubusercontent.com/goat-community/klnavi/main/opentripplanner/graph-main/otp-config.json
               wget -O /var/opentripplanner/router-config.json https://raw.githubusercontent.com/goat-community/klnavi/main/opentripplanner/graph-main/router-config.json
+              tail -1000 /var/opentripplanner/router-config.json
               if [ ! -f /var/opentripplanner/$GRAPH_NAME ]; then 
                 wget -O /var/opentripplanner/$GRAPH_NAME https://assets.plan4better.de/otp/klnavi/$GRAPH_NAME
                 cp /var/opentripplanner/$GRAPH_NAME /var/opentripplanner/graph.obj
