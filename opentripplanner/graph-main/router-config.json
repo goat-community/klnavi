@@ -1,111 +1,111 @@
 {
-    "routingDefaults": {
-      "walkSpeed": 1.3,
-      "transferSlack": 120,
-      "walkReluctance": 1.75,
-      "stairsReluctance": 2,
-      "walkBoardCost": 540,
-      "allowKeepingRentedBicycleAtDestination": true,
-      "keepingRentedBicycleAtDestinationCost": 180,
-      "numItineraries": 5,
-      "bikeTriangleSafetyFactor": 0.4,
-      "bikeTriangleSlopeFactor": 0.3,
-      "bikeTriangleTimeFactor": 0.3,
-      "bikeRentalPickupTime": 60,
-      "bikeRentalPickupCost": 60,
-      "carReluctance": 3.0,
-      "itineraryFilters": {
-        "bikeRentalDistanceRatio": 0.75,
-        "parkAndRideDurationRatio": 0.6,
-        "minBikeParkingDistance": 500,
-        "transitGeneralizedCostLimit": "900 + 2.0 x"
-      },
-      "maxAccessEgressDurationForMode": {
-        "WALK": "20m"
-      },
-      "maxJourneyDuration": "12h"
+  "routingDefaults": {
+    "walkSpeed": 1.3,
+    "transferSlack": 120,
+    "walkReluctance": 1.75,
+    "stairsReluctance": 2,
+    "walkBoardCost": 540,
+    "allowKeepingRentedBicycleAtDestination": true,
+    "keepingRentedBicycleAtDestinationCost": 180,
+    "numItineraries": 5,
+    "bikeTriangleSafetyFactor": 0.4,
+    "bikeTriangleSlopeFactor": 0.3,
+    "bikeTriangleTimeFactor": 0.3,
+    "bikeRentalPickupTime": 60,
+    "bikeRentalPickupCost": 60,
+    "carReluctance": 3.0,
+    "itineraryFilters": {
+      "bikeRentalDistanceRatio": 0.75,
+      "parkAndRideDurationRatio": 0.6,
+      "minBikeParkingDistance": 500,
+      "transitGeneralizedCostLimit": "900 + 2.0 x"
     },
-    "transit": {
-      "dynamicSearchWindow": {
-        "minTransitTimeCoefficient": 1.5,
-        "minWaitTimeCoefficient": 1.5,
-        "minWinTimeMinutes": 60,
-        "maxWinTimeMinutes": 360,
-        "minWindow": "1h",
-        "maxWindow": "6h"
-      }
+    "maxAccessEgressDurationForMode": {
+      "WALK": "20m"
     },
-    "flex": {
-      "maxTransferDurationSeconds": 300
+    "maxJourneyDuration": "12h"
+  },
+  "transit": {
+    "dynamicSearchWindow": {
+      "minTransitTimeCoefficient": 1.5,
+      "minWaitTimeCoefficient": 1.5,
+      "minWinTimeMinutes": 60,
+      "maxWinTimeMinutes": 360,
+      "minWindow": "1h",
+      "maxWindow": "6h"
+    }
+  },
+  "flex": {
+    "maxTransferDurationSeconds": 300
+  },
+  "vectorTileLayers": [
+    {
+      "name": "stops",
+      "type": "Stop",
+      "mapper": "Digitransit",
+      "maxZoom": 20,
+      "minZoom": 14,
+      "cacheMaxSeconds": 600,
+      "expansionFactor": 0.5
     },
-    "vectorTileLayers": [
-      {
-        "name": "stops",
-        "type": "Stop",
-        "mapper": "Digitransit",
-        "maxZoom": 20,
-        "minZoom": 14,
-        "cacheMaxSeconds": 600,
-        "expansionFactor": 0.5
-      },
-      {
-        "name": "stations",
-        "type": "Station",
-        "mapper": "Digitransit",
-        "maxZoom": 20,
-        "minZoom": 12,
-        "cacheMaxSeconds": 600,
-        "expansionFactor": 0.5
-      },
-      {
-        "name": "citybikes",
-        "type": "VehicleRental",
-        "mapper": "Digitransit",
-        "maxZoom": 20,
-        "minZoom": 14,
-        "cacheMaxSeconds": 60,
-        "expansionFactor": 0.5
-      },
-      {
-        "name": "rentalVehicles",
-        "type": "VehicleRentalVehicle",
-        "mapper": "DigitransitRealtime",
-        "maxZoom": 20,
-        "minZoom": 14,
-        "cacheMaxSeconds": 60
-      },
-      {
-        "name": "rentalStations",
-        "type": "VehicleRentalStation",
-        "mapper": "Digitransit",
-        "maxZoom": 20,
-        "minZoom": 14,
-        "cacheMaxSeconds": 600
-      },
-      {
-        "name": "realtimeRentalStations",
-        "type": "VehicleRentalStation",
-        "mapper": "DigitransitRealtime",
-        "maxZoom": 20,
-        "minZoom": 14,
-        "cacheMaxSeconds": 60
-      },
-      {
-        "name": "parking",
-        "type": "VehicleParking",
-        "mapper": "Stadtnavi",
-        "maxZoom": 20,
-        "minZoom": 14,
-        "cacheMaxSeconds": 60,
-        "expansionFactor": 0.5
-      }
-    ],
-    "updaters": [
-      {
-        "type": "vehicle-rental",
-        "frequencySec": 600,
-        "sourceType": "gbfs",
-        "url": "https://api.nextbike.net/maps/gbfs/v1/nextbike_vn/gbfs.json"
-      }
-    ]
+    {
+      "name": "stations",
+      "type": "Station",
+      "mapper": "Digitransit",
+      "maxZoom": 20,
+      "minZoom": 12,
+      "cacheMaxSeconds": 600,
+      "expansionFactor": 0.5
+    },
+    {
+      "name": "citybikes",
+      "type": "VehicleRental",
+      "mapper": "Digitransit",
+      "maxZoom": 20,
+      "minZoom": 14,
+      "cacheMaxSeconds": 60,
+      "expansionFactor": 0.5
+    },
+    {
+      "name": "rentalVehicles",
+      "type": "VehicleRentalVehicle",
+      "mapper": "DigitransitRealtime",
+      "maxZoom": 20,
+      "minZoom": 14,
+      "cacheMaxSeconds": 60
+    },
+    {
+      "name": "rentalStations",
+      "type": "VehicleRentalStation",
+      "mapper": "Digitransit",
+      "maxZoom": 20,
+      "minZoom": 14,
+      "cacheMaxSeconds": 600
+    },
+    {
+      "name": "realtimeRentalStations",
+      "type": "VehicleRentalStation",
+      "mapper": "DigitransitRealtime",
+      "maxZoom": 20,
+      "minZoom": 14,
+      "cacheMaxSeconds": 60
+    },
+    {
+      "name": "parking",
+      "type": "VehicleParking",
+      "mapper": "Stadtnavi",
+      "maxZoom": 20,
+      "minZoom": 14,
+      "cacheMaxSeconds": 60,
+      "expansionFactor": 0.5
+    }
+  ],
+  "updaters": [
+    {
+      "type": "vehicle-rental",
+      "frequencySec": 600,
+      "sourceType": "gbfs",
+      "url": "https://api.nextbike.net/maps/gbfs/v1/nextbike_vn/gbfs.json"
+    }
+  ]
 }

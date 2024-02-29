@@ -1,18 +1,18 @@
 {
-    "areaVisibility": true,
-    "staticBikeParkAndRide": true,
-    "maxTransferDurationSeconds": 900,
-    "osmCacheDataInMem": true,
-    "transitFeeds": [
-      {
-        "source": "https://geoportal.vrn.de/services/sharing/rest/content/items/4ec4b1d131eb46a6bb8e216ce9b90eff/data/vrn_gtfs_latest.zip",
-        "type": "gtfs",
-        "feedId": "vrn_gtfs_latest",
-        "discardMinTransferTimes": true
-      }
-    ],
-    "islandPruning" : {
-      "islandWithStopsMaxSize" : 200,
-      "islandWithoutStopsMaxSize" : 200
+  "areaVisibility": true,
+  "staticBikeParkAndRide": true,
+  "maxTransferDurationSeconds": 900,
+  "osmCacheDataInMem": true,
+  "transitFeeds": [
+    {
+      "source": "https://geoportal.vrn.de/services/sharing/rest/content/items/4ec4b1d131eb46a6bb8e216ce9b90eff/data/vrn_gtfs_latest.zip",
+      "type": "gtfs",
+      "feedId": "vrn_gtfs_latest",
+      "discardMinTransferTimes": true
     }
+  ],
+  "islandPruning": {
+    "islandWithStopsMaxSize": 200,
+    "islandWithoutStopsMaxSize": 200
   }
+}

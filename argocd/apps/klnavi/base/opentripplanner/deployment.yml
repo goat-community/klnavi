@@ -1,7 +1,21 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: opentripplanner-pvc
+  namespace: dev
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 15Gi
+  storageClassName: hcloud-volumes
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: opentripplanner
+  namespace: dev
 spec:
   replicas: 1
   selector:
@@ -18,9 +32,33 @@ spec:
       labels:
         app: opentripplanner
     spec:
+      initContainers:
+        - name: download-files
+          image: busybox
+          command: 
+            - /bin/sh
+            - -c
+            - |
+              GRAPH_NAME=graph_28_02_2024.obj
+              wget -O /var/opentripplanner/otp-config.json https://raw.githubusercontent.com/goat-community/klnavi/main/opentripplanner/graph-main/otp-config.json
+              wget -O /var/opentripplanner/router-config.json https://github.com/goat-community/klnavi/blob/main/opentripplanner/graph-main/router-config.json
+              if [ ! -f /var/opentripplanner/$FILENAME ]; then 
+                wget -O /var/opentripplanner/$FILENAME https://assets.plan4better.de/otp/klnavi/$FILENAME
+                cp /var/opentripplanner/$FILENAME /var/opentripplanner/graph.obj
+              fi
+          volumeMounts:
+            - name: opentripplanner-data
+              mountPath: /var/opentripplanner
       containers:
-        - image: ghcr.io/bbnavi/opentripplaner-berlin-brandenburg:master
+        - image: opentripplanner/opentripplanner:2.5.0_2024-02-29T13-29
           imagePullPolicy: IfNotPresent
           name: opentripplanner
+          volumeMounts:
+            - name: opentripplanner-data
+              mountPath: /var/opentripplanner
           ports:
             - containerPort: 8080
+      volumes:
+        - name: opentripplanner-data
+          persistentVolumeClaim:
+            claimName: opentripplanner-pvc
