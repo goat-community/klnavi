@@ -1,0 +1,13 @@
+{
+    "otpFeatures" : {
+      "SandboxAPILegacyGraphQLApi": true,
+      "SandboxAPIMapboxVectorTilesApi": true,
+      "FlexRouting": true,
+      "VehicleToStopHeuristics": true,
+      "ParallelRouting": true,
+      "ActuatorAPI": true,
+      "ConsiderPatternsForDirectTransfers": false,
+      "AsyncGraphQLFetchers": true
+    }
+  }
+  
