@@ -1,0 +1,23 @@
+name: "PR"
+
+on:
+  pull_request:
+    branches: [main]
+  pull_request_target:
+    branches: [main]
+  merge_group:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+
+jobs:
+  pr-base:
+    name: pr-base
+    uses: "goat-community/.github/.github/workflows/reusable-pr-base.yml@main"
+    permissions:
+      contents: none
+      issues: read
+      pull-requests: write
+    secrets: inherit
