@@ -38,68 +38,88 @@
   "flex": {
     "maxTransferDurationSeconds": 300
   },
-  "vectorTileLayers": [
-    {
-      "name": "stops",
-      "type": "Stop",
-      "mapper": "Digitransit",
-      "maxZoom": 20,
-      "minZoom": 14,
-      "cacheMaxSeconds": 600,
-      "expansionFactor": 0.5
-    },
-    {
-      "name": "stations",
-      "type": "Station",
-      "mapper": "Digitransit",
-      "maxZoom": 20,
-      "minZoom": 12,
-      "cacheMaxSeconds": 600,
-      "expansionFactor": 0.5
-    },
-    {
-      "name": "citybikes",
-      "type": "VehicleRental",
-      "mapper": "Digitransit",
-      "maxZoom": 20,
-      "minZoom": 14,
-      "cacheMaxSeconds": 60,
-      "expansionFactor": 0.5
-    },
-    {
-      "name": "rentalVehicles",
-      "type": "VehicleRentalVehicle",
-      "mapper": "DigitransitRealtime",
-      "maxZoom": 20,
-      "minZoom": 14,
-      "cacheMaxSeconds": 60
-    },
-    {
-      "name": "rentalStations",
-      "type": "VehicleRentalStation",
-      "mapper": "Digitransit",
-      "maxZoom": 20,
-      "minZoom": 14,
-      "cacheMaxSeconds": 600
-    },
-    {
-      "name": "realtimeRentalStations",
-      "type": "VehicleRentalStation",
-      "mapper": "DigitransitRealtime",
-      "maxZoom": 20,
-      "minZoom": 14,
-      "cacheMaxSeconds": 60
-    },
-    {
-      "name": "parking",
-      "type": "VehicleParking",
-      "mapper": "Stadtnavi",
-      "maxZoom": 20,
-      "minZoom": 14,
-      "cacheMaxSeconds": 60,
-      "expansionFactor": 0.5
-    }
-  ],
+  "vectorTiles": {
+    "layers": [
+      {
+        "name": "stops",
+        "type": "Stop",
+        "mapper": "Digitransit",
+        "maxZoom": 20,
+        "minZoom": 14,
+        "cacheMaxSeconds": 600,
+        "expansionFactor": 0.5
+      },
+      {
+        "name": "stations",
+        "type": "Station",
+        "mapper": "Digitransit",
+        "maxZoom": 20,
+        "minZoom": 12,
+        "cacheMaxSeconds": 600,
+        "expansionFactor": 0.5
+      },
+      {
+        "name": "citybikes",
+        "type": "VehicleRental",
+        "mapper": "Digitransit",
+        "maxZoom": 20,
+        "minZoom": 14,
+        "cacheMaxSeconds": 60,
+        "expansionFactor": 0.5
+      },
+      {
+        "name": "rentalVehicles",
+        "type": "VehicleRentalVehicle",
+        "mapper": "DigitransitRealtime",
+        "maxZoom": 20,
+        "minZoom": 14,
+        "cacheMaxSeconds": 60
+      },
+      {
+        "name": "rentalStations",
+        "type": "VehicleRentalStation",
+        "mapper": "Digitransit",
+        "maxZoom": 20,
+        "minZoom": 14,
+        "cacheMaxSeconds": 600
+      },
+      {
+        "name": "realtimeRentalStations",
+        "type": "VehicleRentalStation",
+        "mapper": "DigitransitRealtime",
+        "maxZoom": 20,
+        "minZoom": 14,
+        "cacheMaxSeconds": 60
+      },
+      {
+        "name": "parking",
+        "type": "VehicleParking",
+        "mapper": "Stadtnavi",
+        "maxZoom": 20,
+        "minZoom": 14,
+        "cacheMaxSeconds": 60,
+        "expansionFactor": 0.5
+      },
+      {
+        "name": "vehicleParking",
+        "type": "VehicleParking",
+        "mapper": "Digitransit",
+        "maxZoom": 20,
+        "minZoom": 14,
+        "cacheMaxSeconds": 600,
+        "expansionFactor": 0.25
+      },
+      {
+        "name": "vehicleParkingGroups",
+        "type": "VehicleParkingGroup",
+        "mapper": "Digitransit",
+        "maxZoom": 17,
+        "minZoom": 14,
+        "cacheMaxSeconds": 600,
+        "expansionFactor": 0.25
+      }
+    ]
+  },
   "updaters": [
     {
       "type": "vehicle-rental",
