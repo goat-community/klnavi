@@ -23,7 +23,22 @@
     "maxAccessEgressDurationForMode": {
       "WALK": "20m"
     },
-    "maxJourneyDuration": "12h"
+    "maxJourneyDuration": "12h",
+    "wheelchairAccessibility": {
+      "trip": {
+        "onlyConsiderAccessible": true
+      },
+      "stop": {
+        "onlyConsiderAccessible": true
+      },
+      "elevator": {
+        "onlyConsiderAccessible": false
+      },
+      "inaccessibleStreetReluctance": 25,
+      "maxSlope": 0.06,
+      "slopeExceededReluctance": 50,
+      "stairsReluctance": 25
+    }
   },
   "transit": {
     "dynamicSearchWindow": {
