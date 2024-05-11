@@ -14,5 +14,16 @@
   "islandPruning": {
     "islandWithStopsMaxSize": 200,
     "islandWithoutStopsMaxSize": 200
-  }
+  },
+  "transferRequests": [
+    {
+      "modes": "WALK"
+    },
+    {
+      "modes": "WALK",
+      "wheelchairAccessibility": {
+        "enabled": true
+      }
+    }
+  ]
 }
