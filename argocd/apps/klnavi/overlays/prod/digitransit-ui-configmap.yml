@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: digitransit-ui-config
+data:
+  API_URL: "https://api.klnavi.de"
+  DATAHUB_URL: "https://datahub.bbnavi.de"
+  DATAHUB_O_AUTH_CLIENT_ID: "B0IlpNZbNizOP0hLYJzo88bKVc_SZD6e3Dxxoa6Fgts"
+  DATAHUB_O_AUTH_CLIENT_SECRET: "qFQr8S6ld1tnVjojgSvjr9Q6IoM3i4OdaZ3Hv1M8idk"
+  CONFIG: "klnavi"

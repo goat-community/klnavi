@@ -72,6 +72,7 @@ module "kube-hetzner" {
   load_balancer_location   = "nbg1"
   ssh_max_auth_tries       = 15
   automatically_upgrade_os = false
+  automatically_upgrade_k3s = false
   create_kubeconfig        = false
   kured_version            = "1.13.1"
   extra_kustomize_parameters = {
