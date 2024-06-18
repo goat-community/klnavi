@@ -37,7 +37,7 @@ spec:
           image: busybox
           env:
             - name: GRAPH_NAME
-              value: graph_20_05_2024.obj
+              value: graph_18_06_2024.obj
           command: 
             - /bin/sh
             - -c
