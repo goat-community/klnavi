@@ -37,7 +37,7 @@ spec:
           image: busybox
           env:
             - name: GRAPH_NAME
-              value: graph_28_02_2024.obj
+              value: graph_18_06_2024.obj
           command: 
             - /bin/sh
             - -c
@@ -52,7 +52,7 @@ spec:
             - name: opentripplanner-data
               mountPath: /var/opentripplanner
       containers:
-        - image: docker.io/opentripplanner/opentripplanner:2.5.0_2024-02-22T18-35
+        - image: docker.io/opentripplanner/opentripplanner:2.5.0
           imagePullPolicy: IfNotPresent
           name: opentripplanner
           env:

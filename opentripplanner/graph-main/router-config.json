@@ -26,10 +26,10 @@
     "maxJourneyDuration": "12h",
     "wheelchairAccessibility": {
       "trip": {
-        "onlyConsiderAccessible": true
+        "onlyConsiderAccessible": false
       },
       "stop": {
-        "onlyConsiderAccessible": true
+        "onlyConsiderAccessible": false
       },
       "elevator": {
         "onlyConsiderAccessible": false
