@@ -10,7 +10,8 @@ tfplan
 node_modules
 package-lock.json
 .env*
-/opentripplanner/graph-*/*.obj
-/opentripplanner/graph-*/*.pbf
-/opentripplanner/graph-*/*.zip
-.obj
+*.jar
+*.tif
+*.obj
+*.pbf
+*.zip

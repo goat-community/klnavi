@@ -1,57 +1,28 @@
 {
-  "routingDefaults": {
-    "walkSpeed": 1.3,
-    "transferSlack": 120,
-    "walkReluctance": 1.75,
-    "stairsReluctance": 2,
-    "walkBoardCost": 540,
-    "allowKeepingRentedBicycleAtDestination": true,
-    "keepingRentedBicycleAtDestinationCost": 180,
-    "numItineraries": 5,
-    "bikeTriangleSafetyFactor": 0.4,
-    "bikeTriangleSlopeFactor": 0.3,
-    "bikeTriangleTimeFactor": 0.3,
-    "bikeRentalPickupTime": 60,
-    "bikeRentalPickupCost": 60,
-    "carReluctance": 3.0,
-    "itineraryFilters": {
-      "bikeRentalDistanceRatio": 0.75,
-      "parkAndRideDurationRatio": 0.6,
-      "minBikeParkingDistance": 500,
-      "transitGeneralizedCostLimit": "900 + 2.0 x"
-    },
-    "maxAccessEgressDurationForMode": {
-      "WALK": "20m"
-    },
-    "maxJourneyDuration": "12h",
-    "wheelchairAccessibility": {
-      "trip": {
-        "onlyConsiderAccessible": false
-      },
-      "stop": {
-        "onlyConsiderAccessible": false
-      },
-      "elevator": {
-        "onlyConsiderAccessible": false
-      },
-      "inaccessibleStreetReluctance": 25,
-      "maxSlope": 0.06,
-      "slopeExceededReluctance": 50,
-      "stairsReluctance": 25
-    }
+  "configVersion" : "KL.Navi-OTP-v2.5.0",
+  "server" : {
+    "apiProcessingTimeout" : "10s"
   },
-  "transit": {
-    "dynamicSearchWindow": {
-      "minTransitTimeCoefficient": 1.5,
-      "minWaitTimeCoefficient": 1.5,
-      "minWinTimeMinutes": 60,
-      "maxWinTimeMinutes": 360,
-      "minWindow": "1h",
-      "maxWindow": "6h"
+  "routingDefaults" : {
+    "numItineraries" : 5,
+    "elevatorBoardCost": 0,
+    "walk": {
+      "boardCost": 0,
+      "reluctance": 6,
+      "escalatorReluctance": 0
+    },
+    "wheelchairAccessibility" : {
+      "trip" : {
+        "onlyConsiderAccessible" : false
+      },
+      "stop" : {
+        "onlyConsiderAccessible" : false
+      },
+      "elevator" : {
+        "onlyConsiderAccessible" : false
+      },
+      "maxSlope" : 0.06
     }
-  },
-  "flex": {
-    "maxTransferDurationSeconds": 300
   },
   "vectorTiles": {
     "layers": [
@@ -138,7 +109,6 @@
   "updaters": [
     {
       "type": "vehicle-rental",
-      "frequencySec": 600,
       "sourceType": "gbfs",
       "url": "https://api.nextbike.net/maps/gbfs/v1/nextbike_vn/gbfs.json"
     }
