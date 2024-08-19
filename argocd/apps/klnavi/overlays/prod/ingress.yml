@@ -7,13 +7,31 @@ spec:
     scheme: https
     permanent: true
 ---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: security-headers
+spec:
+  headers:
+    customRequestHeaders:
+      X-Content-Type-Options: nosniff
+      X-Frame-Options: DENY
+      X-XSS-Protection: 1; mode=block
+    stsSeconds: 31536000
+    stsIncludeSubdomains: true
+    stsPreload: true
+    frameDeny: true
+    contentTypeNosniff: true
+    browserXssFilter: true
+    referrerPolicy: same-origin
+---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: public-srv-klnavi
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt
-    traefik.ingress.kubernetes.io/router.middlewares: prod-https-redirectscheme@kubernetescrd
+    traefik.ingress.kubernetes.io/router.middlewares: prod-https-redirectscheme@kubernetescrd,prod-security-headers@kubernetescrd
 spec:
   tls:
   - hosts:
@@ -37,7 +55,7 @@ metadata:
   name: api-public-srv-klnavi
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt
-    traefik.ingress.kubernetes.io/router.middlewares: prod-https-redirectscheme@kubernetescrd
+    traefik.ingress.kubernetes.io/router.middlewares: prod-https-redirectscheme@kubernetescrd,prod-security-headers@kubernetescrd
 spec:
   tls:
   - hosts:
