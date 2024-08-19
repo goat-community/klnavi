@@ -24,6 +24,7 @@ spec:
     contentTypeNosniff: true
     browserXssFilter: true
     referrerPolicy: same-origin
+    permissionsPolicy: "accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()"
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
