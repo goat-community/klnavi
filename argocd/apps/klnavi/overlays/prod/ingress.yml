@@ -32,7 +32,7 @@ metadata:
   name: www-to-non-www
 spec:
   redirectRegex:
-    regex: "^https?:\/\/www\\.(.+)"
+    regex: "^https?://www\\.(.+)"
     replacement: "https://${1}"
     permanent: true
 ---
