@@ -32,8 +32,8 @@ metadata:
   name: www-to-non-www
 spec:
   redirectRegex:
-    regex: "^https?://www\\.(.+)"
-    replacement: "https://$1"
+    regex: "^https?:\/\/www\\.(.+)"
+    replacement: "https://${1}"
     permanent: true
 ---
 apiVersion: networking.k8s.io/v1
