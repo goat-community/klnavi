@@ -42,7 +42,7 @@ metadata:
   name: public-srv-klnavi
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt
-    traefik.ingress.kubernetes.io/router.middlewares: prod-https-redirectscheme@kubernetescrd,prod-security-headers@kubernetescrd,prod-www-to-non-www@kubernetescrd
+    traefik.ingress.kubernetes.io/router.middlewares: prod-www-to-non-www@kubernetescrd,prod-https-redirectscheme@kubernetescrd,prod-security-headers@kubernetescrd
 spec:
   tls:
   - hosts:
@@ -66,7 +66,7 @@ metadata:
   name: api-public-srv-klnavi
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt
-    traefik.ingress.kubernetes.io/router.middlewares: prod-https-redirectscheme@kubernetescrd,prod-security-headers@kubernetescrd,prod-www-to-non-www@kubernetescrd
+    traefik.ingress.kubernetes.io/router.middlewares: prod-www-to-non-www@kubernetescrd,prod-https-redirectscheme@kubernetescrd,prod-security-headers@kubernetescrd
 spec:
   tls:
   - hosts:
