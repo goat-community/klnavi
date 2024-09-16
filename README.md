@@ -25,3 +25,7 @@ The following deployment installation is specific to Hetzner Cloud provider
 packer build hcloud-microos-snapshots.pkr.hcl
 packer init hcloud-microos-snapshots.pkr.hcl
 ```
+## Dataset Sources
+GTFS public transport data for this project is sourced from the following providers
+- [VRN for bus, tram and local public transport](https://www.vrn.de/opendata/datasets)
+- [GTFS.de for S-Bahn and regional rail](https://gtfs.de/en/feeds/de_rv)
