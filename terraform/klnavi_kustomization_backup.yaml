@@ -29,9 +29,10 @@
 - "path": "kured.yaml"
 - "path": "ccm.yaml"
 "resources":
-- "https://github.com/hetznercloud/hcloud-cloud-controller-manager/releases/download/v1.19.0/ccm-networks.yaml"
+- "https://github.com/hetznercloud/hcloud-cloud-controller-manager/releases/download/v1.21.0/ccm-networks.yaml"
 - "https://github.com/kubereboot/kured/releases/download/1.13.1/kured-1.13.1-dockerhub.yaml"
-- "https://raw.githubusercontent.com/rancher/system-upgrade-controller/master/manifests/system-upgrade-controller.yaml"
-- "hcloud-csi.yml"
+- "https://github.com/rancher/system-upgrade-controller/releases/download/v0.14.2/system-upgrade-controller.yaml"
+- "https://github.com/rancher/system-upgrade-controller/releases/download/v0.14.2/crd.yaml"
+- "hcloud-csi.yaml"
 - "traefik_ingress.yaml"
 - "cert_manager.yaml"
