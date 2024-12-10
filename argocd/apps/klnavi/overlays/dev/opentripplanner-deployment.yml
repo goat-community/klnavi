@@ -15,7 +15,7 @@ spec:
           image: busybox
           env:
             - name: GRAPH_NAME
-              value: graph_ped_net_22_11_2024.obj
+              value: graph_vision_impaired_09122024.obj
       containers:
         - image: docker.io/opentripplanner/opentripplanner:2.5.0
           imagePullPolicy: IfNotPresent
