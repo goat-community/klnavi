@@ -1,3 +1,12 @@
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: strip-prefix
+spec:
+  stripPrefix:
+    prefixes:
+      - /pedestrian/standard
+---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -7,10 +16,10 @@ metadata:
 spec:
   tls:
   - hosts:
-    - 'klnavi.dev.plan4better.de'
+    - 'dev.klnavi.de'
     secretName: public-srv-klnavi-dev-tls
   rules:
-  - host: 'klnavi.dev.plan4better.de'
+  - host: 'dev.klnavi.de'
     http:
       paths:
         - path: /
@@ -24,19 +33,20 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: api-public-srv-klnavi-dev
+  name: routing-public-srv-klnavi-dev
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt
+    traefik.ingress.kubernetes.io/router.middlewares: dev-strip-prefix@kubernetescrd
 spec:
   tls:
   - hosts:
-    - 'api.klnavi.dev.plan4better.de'
+    - 'routing.dev.klnavi.de'
     secretName: api-public-srv-klnavi-dev-tls
   rules:
-  - host: 'api.klnavi.dev.plan4better.de'
+  - host: 'routing.dev.klnavi.de'
     http:
       paths:
-        - path: /
+        - path: /pedestrian/standard
           pathType: Prefix
           backend:
             service:

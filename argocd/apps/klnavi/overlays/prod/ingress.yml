@@ -24,7 +24,7 @@ spec:
     contentTypeNosniff: true
     browserXssFilter: true
     referrerPolicy: same-origin
-    permissionsPolicy: "accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()"
+    permissionsPolicy: "accelerometer=(), camera=(), geolocation=(self https://klnavi.de), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()"
 ---
 apiVersion: traefik.io/v1alpha1
 kind: Middleware

@@ -9,6 +9,11 @@ patches:
       kind: ConfigMap
       name: digitransit-ui-config
 
+  - path: opentripplanner-deployment.yml
+    target:
+      kind: Deployment
+      name: opentripplanner
+
 resources:
   - ../../base
   - ./namespace.yml

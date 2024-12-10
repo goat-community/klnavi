@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: opentripplanner
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: opentripplanner
+  minReadySeconds: 100
+  template:
+    spec:
+      initContainers:
+        - name: download-files
+          image: busybox
+          env:
+            - name: GRAPH_NAME
+              value: graph_vision_impaired_09122024.obj
+      containers:
+        - image: docker.io/opentripplanner/opentripplanner:2.5.0
+          imagePullPolicy: IfNotPresent
+          name: opentripplanner
+          env:
+          - name: JAVA_OPTS
+            value: "-Xmx3G"
