@@ -1,0 +1,83 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: opentripplanner-standard-pvc
+  namespace: dev
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 15Gi
+  storageClassName: hcloud-volumes
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: opentripplanner-standard
+  namespace: dev
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: opentripplanner-standard
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 100%
+      maxUnavailable: 50%
+  minReadySeconds: 100
+  template:
+    metadata:
+      labels:
+        app: opentripplanner-standard
+    spec:
+      initContainers:
+        - name: download-files
+          image: busybox
+          env:
+            - name: GRAPH_NAME
+              value: graph_default_09122024.obj
+          command: 
+            - /bin/sh
+            - -c
+            - |
+              wget -O /var/opentripplanner/otp-config.json https://raw.githubusercontent.com/goat-community/klnavi/main/opentripplanner/graph-main/otp-config.json
+              wget -O /var/opentripplanner/router-config.json https://raw.githubusercontent.com/goat-community/klnavi/main/opentripplanner/graph-main/router-config.json
+              if [ ! -f /var/opentripplanner/$GRAPH_NAME ]; then 
+                wget -O /var/opentripplanner/$GRAPH_NAME https://assets.plan4better.de/otp/klnavi/$GRAPH_NAME
+                cp /var/opentripplanner/$GRAPH_NAME /var/opentripplanner/graph.obj
+              fi
+          volumeMounts:
+            - name: opentripplanner-data
+              mountPath: /var/opentripplanner
+      containers:
+        - image: docker.io/opentripplanner/opentripplanner:2.5.0
+          imagePullPolicy: IfNotPresent
+          name: opentripplanner
+          env:
+          - name: JAVA_OPTS
+            value: "-Xmx8G"
+          args: ["--load"]
+          volumeMounts:
+            - name: opentripplanner-data
+              mountPath: /var/opentripplanner
+          ports:
+            - containerPort: 8080
+      volumes:
+        - name: opentripplanner-data
+          persistentVolumeClaim:
+            claimName: opentripplanner-standard-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: opentripplanner-standard-service
+spec:
+  ports:
+    - port: 80
+      targetPort: 8080
+      protocol: TCP
+  type: NodePort
+  selector:
+    app: opentripplanner-standard
