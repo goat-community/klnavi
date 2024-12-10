@@ -1,0 +1,49 @@
+{
+  "configVersion" : "KL.Navi-OTP-v2.5.0",
+  "server" : {
+    "apiProcessingTimeout" : "10s"
+  },
+  "routingDefaults" : {
+    "numItineraries" : 5,
+    "elevatorBoardCost": 0,
+    "walk": {
+      "boardCost": 0,
+      "reluctance": 6,
+      "escalatorReluctance": 0
+    },
+    "wheelchairAccessibility" : {
+      "trip" : {
+        "onlyConsiderAccessible" : false
+      },
+      "stop" : {
+        "onlyConsiderAccessible" : false
+      },
+      "elevator" : {
+        "onlyConsiderAccessible" : false
+      },
+      "stairsReluctance": 0
+    }
+  },
+  "vectorTiles": {
+    "layers": [
+      {
+        "name": "stops",
+        "type": "Stop",
+        "mapper": "Digitransit",
+        "maxZoom": 20,
+        "minZoom": 14,
+        "cacheMaxSeconds": 600,
+        "expansionFactor": 0.5
+      },
+      {
+        "name": "stations",
+        "type": "Station",
+        "mapper": "Digitransit",
+        "maxZoom": 20,
+        "minZoom": 12,
+        "cacheMaxSeconds": 600,
+        "expansionFactor": 0.5
+      }
+    ]
+  }
+}
