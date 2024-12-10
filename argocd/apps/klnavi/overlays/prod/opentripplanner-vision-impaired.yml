@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: opentripplanner-pvc
+  name: opentripplanner-vision-impaired-pvc
   namespace: dev
 spec:
   accessModes:
@@ -14,13 +14,13 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: opentripplanner
+  name: opentripplanner-vision-impaired
   namespace: dev
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: opentripplanner
+      app: opentripplanner-vision-impaired
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -30,26 +30,26 @@ spec:
   template:
     metadata:
       labels:
-        app: opentripplanner
+        app: opentripplanner-vision-impaired
     spec:
       initContainers:
         - name: download-files
           image: busybox
           env:
             - name: GRAPH_NAME
-              value: graph_default_09122024.obj
+              value: graph_vision_impaired_09122024.obj
           command: 
             - /bin/sh
             - -c
             - |
-              wget -O /var/opentripplanner/otp-config.json https://raw.githubusercontent.com/goat-community/klnavi/main/opentripplanner/graph-main/otp-config.json
-              wget -O /var/opentripplanner/router-config.json https://raw.githubusercontent.com/goat-community/klnavi/main/opentripplanner/graph-main/router-config.json
+              wget -O /var/opentripplanner/otp-config.json https://raw.githubusercontent.com/goat-community/klnavi/main/opentripplanner/graph-vision-impaired/otp-config.json
+              wget -O /var/opentripplanner/router-config.json https://raw.githubusercontent.com/goat-community/klnavi/main/opentripplanner/graph-vision-impaired/router-config.json
               if [ ! -f /var/opentripplanner/$GRAPH_NAME ]; then 
                 wget -O /var/opentripplanner/$GRAPH_NAME https://assets.plan4better.de/otp/klnavi/$GRAPH_NAME
                 cp /var/opentripplanner/$GRAPH_NAME /var/opentripplanner/graph.obj
               fi
           volumeMounts:
-            - name: opentripplanner-data
+            - name: opentripplanner-vision-impaired-data
               mountPath: /var/opentripplanner
       containers:
         - image: docker.io/opentripplanner/opentripplanner:2.5.0
@@ -57,14 +57,27 @@ spec:
           name: opentripplanner
           env:
           - name: JAVA_OPTS
-            value: "-Xmx8G"
+            value: "-Xmx3G"
           args: ["--load"]
           volumeMounts:
-            - name: opentripplanner-data
+            - name: opentripplanner-vision-impaired-data
               mountPath: /var/opentripplanner
           ports:
             - containerPort: 8080
       volumes:
-        - name: opentripplanner-data
+        - name: opentripplanner-vision-impaired-data
           persistentVolumeClaim:
-            claimName: opentripplanner-pvc
+            claimName: opentripplanner-vision-impaired-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: opentripplanner-vision-impaired-service
+spec:
+  ports:
+    - port: 80
+      targetPort: 8080
+      protocol: TCP
+  type: NodePort
+  selector:
+    app: opentripplanner-vision-impaired

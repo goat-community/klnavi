@@ -3,7 +3,7 @@ kind: ConfigMap
 metadata:
   name: digitransit-ui-config
 data:
-  API_URL: "https://api.klnavi.plan4better.de"
+  API_URL: "https://routing.klnavi.de/pedestrian/standard"
   DATAHUB_URL: "https://datahub.bbnavi.de"
   DATAHUB_O_AUTH_CLIENT_ID: "B0IlpNZbNizOP0hLYJzo88bKVc_SZD6e3Dxxoa6Fgts"
   DATAHUB_O_AUTH_CLIENT_SECRET: "qFQr8S6ld1tnVjojgSvjr9Q6IoM3i4OdaZ3Hv1M8idk"

@@ -10,6 +10,16 @@ spec:
 apiVersion: traefik.io/v1alpha1
 kind: Middleware
 metadata:
+  name: strip-prefix
+spec:
+  stripPrefix:
+    prefixes:
+      - /pedestrian/standard
+      - /pedestrian/vision-impaired
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
   name: security-headers
 spec:
   headers:
@@ -63,23 +73,30 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: api-public-srv-klnavi
+  name: routing-srv-klnavi
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt
-    traefik.ingress.kubernetes.io/router.middlewares: prod-www-to-non-www@kubernetescrd,prod-https-redirectscheme@kubernetescrd,prod-security-headers@kubernetescrd
+    traefik.ingress.kubernetes.io/router.middlewares: prod-strip-prefix@kubernetescrd,prod-www-to-non-www@kubernetescrd,prod-https-redirectscheme@kubernetescrd,prod-security-headers@kubernetescrd
 spec:
   tls:
   - hosts:
-    - 'api.klnavi.de'
-    secretName: api-public-srv-klnavi-tls
+    - 'routing.klnavi.de'
+    secretName: routing-public-srv-klnavi-tls
   rules:
-  - host: 'api.klnavi.de'
+  - host: 'routing.klnavi.de'
     http:
       paths:
-        - path: /
+        - path: /pedestrian/standard
           pathType: Prefix
           backend:
             service:
-              name: opentripplanner-service
+              name: opentripplanner-standard-service
+              port:
+                number: 80   
+        - path: /pedestrian/vision-impaired
+          pathType: Prefix
+          backend:
+            service:
+              name: opentripplanner-vision-impaired-service
               port:
                 number: 80

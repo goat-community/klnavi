@@ -13,3 +13,5 @@ resources:
   - ../../base
   - ./namespace.yml
   - ./ingress.yml
+  - ./opentripplanner-standard.yml
+  - ./opentripplanner-vision-impaired.yml
