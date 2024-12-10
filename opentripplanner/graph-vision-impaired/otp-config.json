@@ -1,0 +1,9 @@
+{
+  "otpFeatures": {
+    "SandboxAPIMapboxVectorTilesApi": true,
+    "FlexRouting": true,
+    "ParallelRouting": true,
+    "ActuatorAPI": true,
+    "AsyncGraphQLFetchers": true
+  }
+}
