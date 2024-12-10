@@ -49,7 +49,7 @@ spec:
                 cp /var/opentripplanner/$GRAPH_NAME /var/opentripplanner/graph.obj
               fi
           volumeMounts:
-            - name: opentripplanner-data
+            - name: opentripplanner-vision-impaired-data
               mountPath: /var/opentripplanner
       containers:
         - image: docker.io/opentripplanner/opentripplanner:2.5.0
