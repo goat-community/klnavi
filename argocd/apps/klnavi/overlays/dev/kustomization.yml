@@ -3,13 +3,13 @@ kind: Kustomization
 
 namespace: dev
 
-patches:
-  - path: digitransit-ui-configmap.yml
-    target:
-      kind: ConfigMap
-      name: digitransit-ui-config
+# patches:
+#   - path: digitransit-ui-configmap.yml
+#     target:
+#       kind: ConfigMap
+#       name: digitransit-ui-config
 
-resources:
-  - ../../base
-  - ./namespace.yml
-  - ./ingress.yml
+# resources:
+#   - ../../base
+#   - ./namespace.yml
+#   - ./ingress.yml
