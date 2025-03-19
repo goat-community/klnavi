@@ -1,0 +1,36 @@
+
+services:
+  traefik:
+    command:
+      - --entrypoints.websecure.address=:443
+      - --certificatesresolvers.letsencrypt.acme.email=${ACME_EMAIL}
+      - --certificatesresolvers.letsencrypt.acme.storage=/letsencrypt/acme.json
+      - --certificatesresolvers.letsencrypt.acme.tlschallenge=true
+      - --entrypoints.web.http.redirections.entrypoint.to=websecure
+      - --entrypoints.web.http.redirections.entrypoint.scheme=https
+    ports:
+      - "443:443"
+    volumes:
+      - ./letsencrypt:/letsencrypt
+
+  opentripplanner-standard:
+    labels:
+      - traefik.http.routers.otp-standard.entrypoints=websecure
+      - traefik.http.routers.otp-standard.tls=true
+      - traefik.http.routers.otp-standard.tls.certresolver=letsencrypt
+
+  opentripplanner-vision-impaired:
+    labels:
+      - traefik.http.routers.otp-vision-impaired.entrypoints=websecure
+      - traefik.http.routers.otp-vision-impaired.tls=true
+      - traefik.http.routers.otp-vision-impaired.tls.certresolver=letsencrypt
+
+  digitransit-ui:
+    labels:
+      - traefik.http.routers.digitransit-ui.entrypoints=websecure
+      - traefik.http.routers.digitransit-ui.tls=true
+      - traefik.http.routers.digitransit-ui.tls.certresolver=letsencrypt
+
+networks:
+  traefik-public:
+    driver: bridge

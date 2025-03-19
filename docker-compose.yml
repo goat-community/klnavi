@@ -1,23 +1,120 @@
-version: '3.7'
-
 services:
-  digitransit-ui:
-    image: ghcr.io/goat-community/digitransit-ui:latest
+  traefik:
+    image: traefik:v3.3
+    command:
+      - --providers.docker=true
+      - --providers.docker.exposedbydefault=false
+      - --entrypoints.web.address=:80
     ports:
-      - 8080:8080
-    environment:
-      - API_URL=https://api.bbnavi.de
-      - DATAHUB_URL=https://datahub.bbnavi.de
-      - DATAHUB_O_AUTH_CLIENT_ID=B0IlpNZbNizOP0hLYJzo88bKVc_SZD6e3Dxxoa6Fgts
-      - DATAHUB_O_AUTH_CLIENT_SECRET=qFQr8S6ld1tnVjojgSvjr9Q6IoM3i4OdaZ3Hv1M8idk
-      - CONFIG=klnavi
+      - "80:80"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - traefik-public
+    
+  download-otp-graph-files:
+    image: curlimages/curl
+    volumes:
+      - ./opentripplanner/graph-main:/download/standard
+      - ./opentripplanner/graph-vision-impaired:/download/vision-impaired
+    command: >
+      sh -c "
+        set -e  # Exit immediately on any error
+        
+        # Standard graph
+        if [ ! -f /download/standard/graph.obj ]; then
+          echo 'Downloading Standard Graph';
+          curl -f -o /download/standard/graph.obj $${OTP_DEFAULT_GRAPH_URL};
+        else
+          echo 'Standard graph exists';
+        fi
+
+        # Vision-impaired graph
+        if [ ! -f /download/vision-impaired/graph.obj ]; then
+          echo 'Downloading Vision Impaired Graph';
+          curl -f -o /download/vision-impaired/graph.obj $${OTP_VISION_IMPAIRED_GRAPH_URL};
+        else
+          echo 'VI graph exists';
+        fi
+
+        echo 'Downloads completed successfully'"
   
-  opentripplanner:
-    image: docker.io/opentripplanner/opentripplanner:2.5.0_2024-02-22T18-35
+  opentripplanner-standard:
+    image: docker.io/opentripplanner/opentripplanner:2.5.0
+    depends_on:
+      download-otp-graph-files:
+        condition: service_completed_successfully
     environment:
-      - JAVA_OPTS=-Xmx12G
+      - JAVA_OPTS=-Xmx8G
     command: ["--load"]
     volumes:
       - ./opentripplanner/graph-main/:/var/opentripplanner/
     ports:
       - 8090:8080
+    labels: 
+      - traefik.enable=true
+      - traefik.http.routers.otp-standard.rule=Host(`${OTP_DOMAIN:-otp.localhost}`) && PathPrefix(`/pedestrian/standard`)
+      - traefik.http.routers.otp-standard.middlewares=otp-cors-standard
+      - traefik.http.middlewares.otp-cors-standard.headers.accesscontrolallowmethods=GET,POST,OPTIONS
+      - traefik.http.middlewares.otp-cors-standard.headers.accesscontrolalloworiginlist=${APP_DOMAIN:-app.localhost}
+      - traefik.http.middlewares.otp-cors-standard.headers.accesscontrolallowheaders=Content-Type,Origin,Accept
+      - traefik.http.middlewares.otp-cors-standard.headers.addvaryheader=true      
+      - traefik.http.routers.otp-standard.middlewares=otp-stripprefix-standard
+      - traefik.http.middlewares.otp-stripprefix-standard.stripprefix.prefixes=/pedestrian/standard
+      - traefik.http.routers.otp-standard.entrypoints=web
+      - traefik.http.services.otp-standard.loadbalancer.server.port=8080
+    networks:
+      - traefik-public
+
+  opentripplanner-vision-impaired:
+    image: docker.io/opentripplanner/opentripplanner:2.5.0
+    depends_on:
+      download-otp-graph-files:
+        condition: service_completed_successfully
+    environment:
+      - JAVA_OPTS=-Xmx4G
+    command: ["--load"]
+    volumes:
+      - ./opentripplanner/graph-vision-impaired/:/var/opentripplanner/
+    ports:
+      - 8091:8080
+    labels: 
+      - traefik.enable=true
+      - traefik.http.routers.otp-vision-impaired.rule=Host(`${OTP_DOMAIN:-otp.localhost}`) && PathPrefix(`/pedestrian/vision-impaired`)
+      - traefik.http.routers.otp-vision-impaired.middlewares=otp-cors-vision-impaired
+      - traefik.http.middlewares.otp-cors-vision-impaired.headers.accesscontrolallowmethods=GET,POST,OPTIONS
+      - traefik.http.middlewares.otp-cors-vision-impaired.headers.accesscontrolalloworiginlist=${APP_DOMAIN:-app.localhost}
+      - traefik.http.middlewares.otp-cors-vision-impaired.headers.accesscontrolallowheaders=Content-Type,Origin,Accept
+      - traefik.http.middlewares.otp-cors-vision-impaired.headers.addvaryheader=true
+      - traefik.http.routers.otp-vision-impaired.middlewares=otp-stripprefix-vision-impaired
+      - traefik.http.middlewares.otp-stripprefix-vision-impaired.stripprefix.prefixes=/pedestrian/vision-impaired
+      - traefik.http.routers.otp-vision-impaired.entrypoints=web
+      - traefik.http.services.otp-vision-impaired.loadbalancer.server.port=8080
+    networks:
+      - traefik-public
+
+  digitransit-ui:
+    image: ghcr.io/goat-community/digitransit-ui:latest
+    depends_on:
+      - opentripplanner-standard
+      - opentripplanner-vision-impaired
+    environment:
+      - API_URL=http://${OTP_DOMAIN:-otp.localhost}/pedestrian/standard
+      - API_VISUAL_IMPAIRMENT_URL=http://${OTP_DOMAIN:-otp.localhost}/pedestrian/vision-impaired/otp/routers/default/
+      - DATAHUB_URL=https://datahub.bbnavi.de
+      - DATAHUB_O_AUTH_CLIENT_ID=B0IlpNZbNizOP0hLYJzo88bKVc_SZD6e3Dxxoa6Fgts
+      - DATAHUB_O_AUTH_CLIENT_SECRET=qFQr8S6ld1tnVjojgSvjr9Q6IoM3i4OdaZ3Hv1M8idk
+      - CONFIG=klnavi
+    ports:
+      - 8080:8080
+    labels: 
+      - traefik.enable=true
+      - traefik.http.routers.digitransit-ui.rule=Host(`${UI_DOMAIN:-app.localhost}`)
+      - traefik.http.routers.digitransit-ui.entrypoints=web
+      - traefik.http.services.digitransit-ui.loadbalancer.server.port=8080
+    networks:
+      - traefik-public
+
+networks:
+  traefik-public:
+    driver: bridge

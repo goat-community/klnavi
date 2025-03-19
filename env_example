@@ -1,0 +1,10 @@
+# Required for production
+ACME_EMAIL=
+
+# Domains configuration (!!! WITHOUT HTTP:// or HTTPS:// !!!)
+OTP_DOMAIN=otp.localhost
+UI_DOMAIN=app.localhost
+
+# OTP Configuration
+OTP_DEFAULT_GRAPH_URL=https://assets.plan4better.de/otp/klnavi/graph_default_09122024.obj
+OTP_VISION_IMPAIRED_GRAPH_URL=https://assets.plan4better.de/otp/klnavi/graph_vision_impaired_09122024.obj
