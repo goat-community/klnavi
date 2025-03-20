@@ -16,20 +16,24 @@ This repository contains the complete infrastructure-as-code (IaC) implementatio
 
 ## Prerequisites
 TOOLS REQUIRED:
-- Terraform v1.3+
-- ArgoCD CLI v2.4+
-- kubectl v1.25+
-- Docker v20.10+
-- Packer v1.8+
-- Git
+
+- docker-compose setup:
+    - Git
+    - Docker v20.10+
+
+- kubernetes setup:
+    - ArgoCD CLI v2.4+
+    - kubectl v1.25+
+    - Terraform v1.3+
+    - Packer v1.8+
 
 CLOUD REQUIREMENTS:
-- Hetzner Cloud account with API token
 - Registered domain name for production
 - S3-compatible storage for graph files
+- Hetzner Cloud account with API token (Only for Kubernetes setup)
 
 ## Installation
-#### LOCAL DEVELOPMENT SETUP:
+#### SETUP USING DOCKER-COMPOSE
 
 1. Clone repository:
 
@@ -40,11 +44,11 @@ cd klnavi
 
 2. Create environment file:
 ```
-cp .env.example .env
+cp env_example .env
 Edit .env with your local values
 ```
 
-3. Start services:
+3. Start services (prod):
 ```
 docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
 ```
@@ -55,7 +59,7 @@ OTP Standard: http://otp.localhost/pedestrian/standard
 
 Digitransit UI: http://app.localhost
 
-#### PRODUCTION DEPLOYMENT (HETZNER CLOUD):
+#### SETUP USING KUBERNETES (HETZNER CLOUD):
 
 1. Prepare infrastructure:
 ```
@@ -92,7 +96,7 @@ kubectl get pods -n klnavi
 ```
 ## Workflows
 
-#### DATA PIPELINE (PROD K8S):
+#### DATA PIPELINE (KUBERNETES):
 
 1. Download GTFS feeds from [VRN](https://www.vrn.de/opendata/datasets) and [GTFS.de](https://gtfs.de/en/feeds/de_rv)
 2. Process with OpenTripPlanner builder
@@ -100,7 +104,7 @@ kubectl get pods -n klnavi
 4. Update router-config.json files
 5. ArgoCD automatically deploys updates
 
-#### CODE DEPLOYMENT:
+#### CODE DEPLOYMENT (KUBERNETES):
 ```
 Local -> Commit to main branch -> ArgoCD sync -> Production rollout
 ```
