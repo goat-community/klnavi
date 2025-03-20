@@ -57,21 +57,21 @@ Digitransit UI: http://app.localhost
 
 #### PRODUCTION DEPLOYMENT (HETZNER CLOUD):
 
-Prepare infrastructure:
+1. Prepare infrastructure:
 ```
 cd terraform
 terraform init -backend-config=backend.conf
 terraform apply -var-file="terraform.tfvar
 ```
 
-Configure ArgoCD:
+2. Configure ArgoCD:
 ```
 argocd login <ARGOCD_SERVER_URL>
 argocd app create -f argocd/apps/klnavi/base/kustomization.yml
 argocd app sync klnavi
 ```
 
-Verify deployment:
+3. Verify deployment:
 ```
 kubectl get pods -n klnavi
 ```
